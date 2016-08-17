@@ -36,7 +36,3 @@ make install SYMLINK=1 CVSTAG=sbbs316c
 
 wget \
     "http://cvs.synchro.net/cgi-bin/viewcvs.cgi/*checkout*/install/init.d/sbbs.debian"
-
-mv sbbs.debian sbbs
-cp sbbs /etc/init.d/
-chmod +x /etc/init.d/sbbs
