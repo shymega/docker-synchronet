@@ -5,21 +5,37 @@
 ####################
 
 # Set base image
-FROM debian:stable
+FROM debian:jessie
 
 # Set maintainer.
 MAINTAINER shymega <shymega@shymega.org.uk>
 
-# Add install script to the image.
-ADD ./install.sh /install.sh
-# Run install script.
-RUN /install.sh
+# Update aptitude and install packages
+# Install packages.
 
-# Add run script to image
-ADD ./run.sh /run.sh
+RUN apt-get -yq update
+RUN apt-get -yq install build-essential linux-libc-dev \
+                        libncurses5-dev libnspr4-dev libcap2-dev gdb \
+                        unzip lrzsz gkermit \
+                        python pkgconf cvs perl
 
-# Set runtime user as root.
-USER root
+# Create user
+ENV USERNAME docker
+RUN useradd -rm -d /docker docker
 
-# Set entrypoint to /run.sh
-CMD ["/run.sh"]
+# Set user
+USER "$USERNAME"
+
+# Move to sbbs dir
+RUN mkdir -p /docker/sbbs
+WORKDIR /docker/sbbs
+
+# Add Makefile
+ADD http://cvs.synchro.net/cgi-bin/viewcvs.cgi/*checkout*/install/GNUmakefile \
+    /sbbs/GNUmakefile
+
+# Compile
+RUN make install SYMLINK=1 CVSTAG=sbbs316c
+
+# Set entrypoint to SBBS
+CMD ["/docker/sbbs/exec/sbbs"]
