@@ -5,7 +5,7 @@
 ####################
 
 # Set base image
-FROM debian:stretch
+FROM debian:buster
 
 # Set maintainer.
 LABEL maintainer="Dom Rodriguez <shymega@shymega.org.uk>"
