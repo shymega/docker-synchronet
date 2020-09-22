@@ -15,7 +15,7 @@ LABEL maintainer="Dom Rodriguez <shymega@shymega.org.uk>"
 
 RUN apt-get -yq update && \
   apt-get -yq install build-essential linux-libc-dev \
-    libncurses5-dev libnspr4-dev libcap2-dev gdb \
+    libncurses5-dev libnspr4-dev libcap2-dev gdb sudo \
     unzip lrzsz gkermit \
     python pkgconf cvs perl \
     zip
