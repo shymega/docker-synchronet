@@ -39,7 +39,7 @@ RUN chown -Rv docker: /docker
 USER docker
 
 # Compile
-RUN make install SYMLINK=1 CVSTAG=sbbs316c
+RUN make && make install
 
 # Set entrypoint to SBBS
 CMD ["/docker/sbbs/exec/sbbs"]
