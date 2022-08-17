@@ -22,7 +22,6 @@ RUN apt-get -yq update && \
 
 # Create user
 RUN useradd -rm -d /docker docker
-RUN adduser --disabled-password --gecos '' docker
 RUN adduser docker sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
