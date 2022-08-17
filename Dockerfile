@@ -18,10 +18,13 @@ RUN apt-get -yq update && \
     libncurses5-dev libnspr4-dev libcap2-dev gdb sudo \
     unzip lrzsz gkermit \
     python pkgconf cvs perl \
-    zip
+    zip sudo
 
 # Create user
 RUN useradd -rm -d /docker docker
+RUN adduser --disabled-password --gecos '' docker
+RUN adduser docker sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # Set user
 USER docker
