@@ -1,0 +1,29 @@
+name: Synchronet BBS container builder
+'on':
+  - push
+  - pull_request
+  - workflow_dispatch
+jobs:
+  build-container-image:
+    name: Build and push container image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+
+      - name: Build images
+        id: build
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: shymega/synchronet
+          tags: latest
+          containerfiles: ./Dockerfile
+
+      - name: Push container
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.build.outputs.image }}
+          tags: ${{ steps.build.outputs.tags }}
+          registry: docker.io
+          username: shymega
+          password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
